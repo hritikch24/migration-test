@@ -6,6 +6,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {getAllFeedbacks} from '../../Redux/Root/actions'
 import toast from 'react-hot-toast'
 import swal from 'sweetalert'
+import styled from 'styled-components'
 
 const Landing = () => {
   const dispatch = useDispatch()
@@ -41,6 +42,17 @@ const Landing = () => {
   const showFeedback = (feedback: any) =>{
       swal(feedback);
   }
+
+  const Button = styled.button`
+     background: #827ffe;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  `;
   return (
     <>
       <LandingContainer>
@@ -87,7 +99,8 @@ const Landing = () => {
                 accessor: 'side',
                 Cell: (row: any) => (
                   <Col onClick={() =>{showFeedback(row.original.feedback)}}>
-                    <div>{row.original.feedback}</div>
+                    {/* <div>{row.original.feedback}</div> */}
+                    <Button  >View</Button>
                   </Col>
                 ),
                 sortMethod: (a: any, b: any) => Number(b) - Number(a),
