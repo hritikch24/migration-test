@@ -39,8 +39,8 @@ const Landing = () => {
   }
 
   // show={show == "login" ? true : false} Close={() => Close()} 
-  const showFeedback = (feedback: any) =>{
-      swal(feedback);
+  const showFeedback = (feedback: any,name: any) =>{
+      swal(name,feedback);
   }
 
   const Button = styled.button`
@@ -98,7 +98,7 @@ const Landing = () => {
                 Header: renderTableHeading(`Message`),
                 accessor: 'side',
                 Cell: (row: any) => (
-                  <Col onClick={() =>{showFeedback(row.original.feedback)}}>
+                  <Col onClick={() =>{showFeedback(row.original.feedback, row.original.name)}}>
                     {/* <div>{row.original.feedback}</div> */}
                     <Button  >View</Button>
                   </Col>

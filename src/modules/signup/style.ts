@@ -80,7 +80,7 @@ export const Close = styled.img`
     width: 25px;
   }
 `
-export const FormWrapper = styled.form`
+export const FormWrapper = styled.div`
   width: 100%;
 `
 export const Input = styled.input`
