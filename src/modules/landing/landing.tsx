@@ -62,6 +62,17 @@ const Landing = () => {
             data={tableData}
             columns={[
               {
+                Header: <div>{renderTableHeading('Date')}</div>,
+                accessor: 'side',
+                Cell: (row: any) => (
+                  <Col>
+                    <div>{row.original.createdAt.substring(0,10) }</div>
+                  </Col>
+                ),
+                sortMethod: (a: any, b: any) => Number(b) - Number(a),
+                width: deskResponsive ? 100 : 140,
+              },
+              {
                 Header: <div>{renderTableHeading('Name')}</div>,
                 accessor: 'date',
                 Cell: (row: any) => (
@@ -92,7 +103,7 @@ const Landing = () => {
                   </Col>
                 ),
                 sortMethod: (a: any, b: any) => Number(b) - Number(a),
-                width: deskResponsive ? 90 : 120,
+                width: deskResponsive ? 100 : 140,
               },
               {
                 Header: renderTableHeading(`Message`),

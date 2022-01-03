@@ -20,6 +20,7 @@ import Landing from '../landing/landing'
 
 const Homepage = (props: any) => {
   const dispatch = useDispatch()
+  const [admin, setAdmin] =  useState(false)
   const {feedbackPostSuccess, feedbackPostLoading} = useSelector(
     (state: any) => state.feedback
   )
@@ -57,7 +58,6 @@ const Homepage = (props: any) => {
   useEffect(() => {
     if (feedbackPostSuccess === 'success') {
       toast.success('Successfully Submitted!')
-
       setMessage('')
       setCategoryName('')
     } else {
@@ -69,21 +69,31 @@ const Homepage = (props: any) => {
     if(loginSuccess !== ''){
       setName(loginSuccess.name)
       setEmail(loginSuccess.email)
+      if(localStorage.getItem('loginSuccess')){
+        const isAdmin = JSON.parse(localStorage.getItem('loginSuccess') || `{"isAdmin":"false"}`)
+        if(isAdmin.isAdmin === true){
+
+          setAdmin(true);
+        }else{
+          setAdmin(false)
+        }
+      }
     }else {
       setName('')
       setEmail('')
+      setAdmin(false)
     }
   }, [loginSuccess])
 
   useEffect(() => {
     if(localStorage.getItem('name')){
       setName(localStorage.getItem('name') || '')
-      setEmail(localStorage.getItem('email') || '')
+      setEmail(localStorage.getItem('email') || '')   
     }
   }, [])
 
   return (<>
-      { loginSuccess.isAdmin ? <Landing /> : 
+      { admin ? <Landing /> : 
     <HomeContainer>
       <Card>
         <Title>We value your feedback</Title>
