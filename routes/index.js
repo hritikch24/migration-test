@@ -6,9 +6,11 @@ const Feedbacks = require('../models/feedbacks');
 const Users = require('../models/users');
 let jwt = require('jsonwebtoken');
 const { encrypt, decrypt } = require('../crypto/crypto');
+const dbUri='mongodb+srv://feedback-portal:feedback-portal357@feedback-portal.nn6pa.mongodb.net/feedback?retryWrites=true&w=majority'
+const ACCESS_TOKEN='vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3'
 
 const connection = () =>{
-mongoose.connect(process.env.dbUri, {useNewUrlParser : true, useUnifiedTopology : true})
+mongoose.connect(dbUri, {useNewUrlParser : true, useUnifiedTopology : true})
 .then(() => console.log(`Server is running on port`))
 .catch((error) =>  console.log(error.message));
 }
@@ -38,26 +40,6 @@ router.post('/add-feedbacks', (req,res) =>{
       console.log(err);
     })
 });
-
-// router.put('/add-feedbacks/:id', (req,res) =>{
-//   connection();
-//   const body = req.body;
-//   const {name,email,category,feedback} = body;
-//   const feedbacks = new Feedbacks({
-//     name:name,
-//     email:email,
-//     category:category,
-//     feedback:feedback,
-//     status:'New'
-//   });
-//   feedbacks.save()
-//     .then((result) =>{
-//       res.send(result)
-//     })
-//     .catch((err) =>{
-//       console.log(err);
-//     })
-// });
 
 router.post('/add-user',async (req,res) => {
   connection();
@@ -110,8 +92,7 @@ router.post('/userlogin',async (req,res) =>{
     .then(async (result) =>{
       if( body.password === decrypt(result.password)){
         let data = {"login":"success", "isAdmin":result.isAdmin,email:body.email,name:result.name};
-        const loginToken = jwt.sign(data,process.env.ACCESS_TOKEN)
-        // res.send(loginToken);
+        const loginToken = jwt.sign(data,ACCESS_TOKEN)
         res.send(data);
       }
       else{
